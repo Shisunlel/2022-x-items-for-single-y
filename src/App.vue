@@ -1,6 +1,18 @@
 <script setup>
 import ItemSelect from './components/ItemSelect.vue'
 import ComparisonSummary from './components/ComparisonSummary.vue'
+import { onMounted } from 'vue';
+import {
+  useItemComparison
+} from './composables/itemComparison'
+
+const {
+  findProducts,
+  compareProducts,
+} = useItemComparison();
+onMounted(async () => {
+  await findProducts();
+})
 </script>
 
 <template>
@@ -10,6 +22,6 @@ import ComparisonSummary from './components/ComparisonSummary.vue'
       <ItemSelect />
       <ItemSelect />
     </div>
-    <ComparisonSummary />
+    <ComparisonSummary v-if="(compareProducts.length > 1)" />
   </div>
 </template>
